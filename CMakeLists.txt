@@ -13,3 +13,5 @@ project ("CMAKE")
 
 # 包含子项目。
 add_subdirectory ("rtsp_server")
+add_subdirectory ("hls_server")
+add_subdirectory ("httpflv_server")
