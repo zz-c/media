@@ -374,51 +374,38 @@ static void doClient(int clientSockfd, const char* clientIP, int clientPort) {
         }
 
         if (!strcmp(method, "OPTIONS")) {
-            if (handleCmd_OPTIONS(sBuf, CSeq))
-            {
+            if (handleCmd_OPTIONS(sBuf, CSeq)){
                 printf("failed to handle options\n");
                 break;
             }
-        }
-        else if (!strcmp(method, "DESCRIBE")) {
-            if (handleCmd_DESCRIBE(sBuf, CSeq, url))
-            {
+        }else if (!strcmp(method, "DESCRIBE")) {
+            if (handleCmd_DESCRIBE(sBuf, CSeq, url)){
                 printf("failed to handle describe\n");
                 break;
             }
-        }
-        else if (!strcmp(method, "SETUP")) {
-            if (handleCmd_SETUP(sBuf, CSeq, clientRtpPort))
-            {
+        }else if (!strcmp(method, "SETUP")) {
+            if (handleCmd_SETUP(sBuf, CSeq, clientRtpPort)){
                 printf("failed to handle setup\n");
                 break;
             }
-
             serverRtpSockfd = createUdpSocket();
             serverRtcpSockfd = createUdpSocket();
-
-            if (serverRtpSockfd < 0 || serverRtcpSockfd < 0)
-            {
+            if (serverRtpSockfd < 0 || serverRtcpSockfd < 0){
                 printf("failed to create udp socket\n");
                 break;
             }
-
             if (bindSocketAddr(serverRtpSockfd, "0.0.0.0", SERVER_RTP_PORT) < 0 ||
-                bindSocketAddr(serverRtcpSockfd, "0.0.0.0", SERVER_RTCP_PORT) < 0)
-            {
+                bindSocketAddr(serverRtcpSockfd, "0.0.0.0", SERVER_RTCP_PORT) < 0){
                 printf("failed to bind addr\n");
                 break;
             }
 
-        }
-        else if (!strcmp(method, "PLAY")) {
-            if (handleCmd_PLAY(sBuf, CSeq))
-            {
+        }else if (!strcmp(method, "PLAY")) {
+            if (handleCmd_PLAY(sBuf, CSeq)){
                 printf("failed to handle play\n");
                 break;
             }
-        }
-        else {
+        }else {
             printf("未定义的method = %s \n", method);
             break;
         }
@@ -430,7 +417,6 @@ static void doClient(int clientSockfd, const char* clientIP, int clientPort) {
 
         //开始播放，发送RTP包
         if (!strcmp(method, "PLAY")) {
-
             int frameSize, startCode;
             char* frame = (char*)malloc(500000);
             struct RtpPacket* rtpPacket = (struct RtpPacket*)malloc(500000);
@@ -448,29 +434,21 @@ static void doClient(int clientSockfd, const char* clientIP, int clientPort) {
 
             while (true) {
                 frameSize = getFrameFromH264File(fp, frame, 500000);
-                if (frameSize < 0)
-                {
+                if (frameSize < 0){
                     printf("读取%s结束,frameSize=%d \n", H264_FILE_NAME, frameSize);
                     break;
                 }
-
                 if (startCode3(frame))
                     startCode = 3;
                 else
                     startCode = 4;
 
                 frameSize -= startCode;
-                rtpSendH264Frame(serverRtpSockfd, clientIP, clientRtpPort,
-                    rtpPacket, frame + startCode, frameSize);
-
-               
-
+                rtpSendH264Frame(serverRtpSockfd, clientIP, clientRtpPort, rtpPacket, frame + startCode, frameSize);
                 Sleep(40);
-                //usleep(40000);//1000/25 * 1000
             }
             free(frame);
             free(rtpPacket);
-
             break;
         }
 
