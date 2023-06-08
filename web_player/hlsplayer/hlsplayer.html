@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HlsPlayer</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet"/>
+</head>
+<body style="text-align:center;">
+ 
+<h1>网页端播放 HLS(<code>.m3u8</code>) 视频</h1>
+<p>借助 video.js 和 videojs-contrib-hls</p>
+<p>由于 videojs-contrib-hls 需要通过 XHR 来获取解析 m3u8 文件, 因此会遭遇跨域问题, 请设置浏览器运行跨域</p>
+ 
+<video id="video" class="video-js vjs-default-skin vjs-big-play-centered" controls style="margin: auto"  width="640" height="268" >
+    <source src="http://127.0.0.1:8080/index.m3u8" type="application/x-mpegURL">
+    <!--<source src="http://127.0.0.1:80/live/test/hls.m3u8" type="application/x-mpegURL"> -->
+</video>
+<script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+<!-- 网页端浏览器不支持播放 hls 文件(m3u8), 需要 videojs-contrib-hls 来解码 -->
+<script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+<script>
+    const player = videojs('video');
+    player.play();
+</script>
+</body>
+</html>
