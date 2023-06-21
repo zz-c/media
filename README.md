@@ -1,5 +1,15 @@
 "# media" 
-* 学习代码主要来源于北小菜个人主页地址：https://space.bilibili.com/487906612
+学习代码主要来源
+雷霄骅：
+https://github.com/leixiaohua1020
+https://blog.csdn.net/leixiaohua1020/
+乔红：
+https://space.bilibili.com/38154792
+https://www.zzsin.com/
+https://github.com/numberwolf
+北小菜：
+https://space.bilibili.com/487906612
+http://www.any12345.com/
 
 
 wireshark抓取本机包
